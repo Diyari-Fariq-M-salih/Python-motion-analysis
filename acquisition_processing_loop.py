@@ -21,6 +21,18 @@ for cpt in range(1, 200):
     if I1 is None:
         print("File missing:", path)
         continue
+    # Compute absolute difference
+    diff = np.abs(I1 - I0)
+
+    # Choose a threshold (example)
+    T = 25
+
+    # Threshold
+    motion_mask = (diff > T).astype(np.uint8) * 255
+
+    # Display the result
+    cv2.imshow("Difference", diff / diff.max())
+    cv2.imshow("Motion Mask", motion_mask)
 
     I1 = I1.astype(np.float64)
 
