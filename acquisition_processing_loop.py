@@ -3,17 +3,16 @@ import numpy as np
 import time
 import os
 
-# Path to your images folder
+# Path to images folder
 img_dir = "Road/"   # <-- change if needed
 
 # Load first image
 I0 = cv2.imread(os.path.join(img_dir, "0000.pgm"), cv2.IMREAD_GRAYSCALE)
-I0 = I0.astype(np.float64)
 
 for cpt in range(1, 200):
 
     # Build filename like MATLAB version
-    filename = f"{cpt:04d}.pgm"     # creates 0001.pgm, 0002.pgm, ..., 0199.pgm
+    filename = f"{cpt:04d}.pgm"
     path = os.path.join(img_dir, filename)
 
     # Load next image
@@ -21,26 +20,36 @@ for cpt in range(1, 200):
     if I1 is None:
         print("File missing:", path)
         continue
-    # Compute absolute difference
-    diff = np.abs(I1 - I0)
 
-    # Choose a threshold (example)
+    # ----------- SMOOTHING BEFORE DIFFERENCE -----------
+
+    # Apply Gaussian smoothing to reduce noise impact, can also use bilateral filter or box filter
+    I0_s = cv2.GaussianBlur(I0, (5, 5), 1.0)
+    I1_s = cv2.GaussianBlur(I1, (5, 5), 1.0)
+
+    diff = cv2.absdiff(I1_s, I0_s)
+
+    
+    # ---------- THRESHOLDING ----------
+    # Threshold the difference image: 
+    # (diff > T) creates a boolean mask (True where diff > T, else False) 
+    # .astype(np.uint8) converts True→1 and False→0 
+    # multiplying by 255 turns it into a proper binary
     T = 25
-
-    # Threshold
     motion_mask = (diff > T).astype(np.uint8) * 255
 
-    # Display the result
-    cv2.imshow("Difference", diff / diff.max())
+    # ---------- DISPLAY ----------
+    if diff.max() > 0:
+        cv2.imshow("Difference", diff / diff.max())
+    else:
+        cv2.imshow("Difference", diff)
+
     cv2.imshow("Motion Mask", motion_mask)
+    cv2.imshow("Frame", I1)   # Display raw frame
 
-    I1 = I1.astype(np.float64)
-
-    # Display image
-    cv2.imshow("Frame", I1 / 255.0)   # normalized for display
     cv2.setWindowTitle("Frame", filename)
 
-    # Update previous frame
+    # Update previous frame (keep uint8!)
     I0 = I1.copy()
 
     # Pause like MATLAB pause(0.2)
