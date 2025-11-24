@@ -29,6 +29,16 @@ for cpt in range(1, 200):
 
     diff = cv2.absdiff(I1_s, I0_s)
 
+
+    # ----------- TEMPORAL SOBEL FILTER -----------
+    sobel_temp = cv2.subtract(I1_s.astype(np.float32), I0_s.astype(np.float32))
+
+    sobel_abs = np.abs(sobel_temp)
+
+    sobel_norm = cv2.normalize(sobel_abs, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+
+    cv2.imshow("Temporal Sobel", sobel_norm)
+
     # -------- Temporal Prewitt Filter --------
     # Prewitt temporal derivative = I1 - I0
     prewitt_temp = cv2.subtract(I1.astype(np.float32), I0.astype(np.float32))
