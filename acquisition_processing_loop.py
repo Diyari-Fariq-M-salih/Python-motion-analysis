@@ -29,7 +29,18 @@ for cpt in range(1, 200):
 
     diff = cv2.absdiff(I1_s, I0_s)
 
-    
+    # -------- Temporal Prewitt Filter --------
+    # Prewitt temporal derivative = I1 - I0
+    prewitt_temp = cv2.subtract(I1.astype(np.float32), I0.astype(np.float32))
+
+    # Absolute value for display
+    prewitt_abs = np.abs(prewitt_temp)
+
+    # Normalize for display
+    prewitt_norm = cv2.normalize(prewitt_abs, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+
+    cv2.imshow("Temporal Prewitt", prewitt_norm)
+
     # ---------- THRESHOLDING ----------
     # Threshold the difference image: 
     # (diff > T) creates a boolean mask (True where diff > T, else False) 
