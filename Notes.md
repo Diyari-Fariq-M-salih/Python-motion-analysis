@@ -54,3 +54,28 @@ Sorted neighborhood values:
 0, 255, 255, 255, ... , 255
 
 ## Median = 255 → stays white.
+
+### for background processing
+
+🚗✨ Imagine taking 200 photos of a road…
+
+The road stays in the same place in every photo.
+
+A car appears in different positions in every photo because it’s moving.
+
+Now imagine stacking all 200 photos on top of each other and blending them together.
+
+🧩 What happens to the background?
+✔ The background (road, buildings, sky)
+
+…stays in exactly the same pixel positions in all 200 images.
+
+This means:
+
+The background contributes 200 times to the average.
+
+### Its values reinforce each other.
+
+### It becomes very strong and stable.
+
+### Background = always visible + never moving → survives averaging.
