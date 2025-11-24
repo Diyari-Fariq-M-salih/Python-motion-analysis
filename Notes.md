@@ -79,3 +79,16 @@ The background contributes 200 times to the average.
 ### It becomes very strong and stable.
 
 ### Background = always visible + never moving → survives averaging.
+
+# Average and Exponential background processing
+
+| Feature                               | Average Background | Exponential Background |
+| ------------------------------------- | ------------------ | ---------------------- |
+| Needs all frames first                | ✔ Yes              | ✖ No                   |
+| Adapts over time                      | ✖ No               | ✔ Yes                  |
+| Good for real-time                    | ✖ No               | ✔ Yes                  |
+| Ignores moving objects                | ✔ Always           | ✔ Mostly               |
+| Handles lighting changes              | ✖ Poorly           | ✔ Well                 |
+| Object becomes background if it stops | ✖ No               | ✔ Yes                  |
+| Good for static scenes                | ✔ Excellent        | ✔ Good                 |
+| Good for dynamic scenes               | ✖ Bad              | ✔ Excellent            |
