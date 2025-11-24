@@ -39,6 +39,12 @@ for cpt in range(1, 200):
     motion_mask = (diff > T).astype(np.uint8) * 255
 
     # ---------- DISPLAY ----------
+    # Median filtering to clean up the binary mask
+    motion_mask_filtered = cv2.medianBlur(motion_mask, 5)
+
+    # Display filtered result
+    cv2.imshow("Motion Mask (Filtered)", motion_mask_filtered)
+
     if diff.max() > 0:
         cv2.imshow("Difference", diff / diff.max())
     else:
