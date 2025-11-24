@@ -23,3 +23,34 @@ Motion only triggers strong differences on edges, so interior regions of objects
 ### 5. Different regions of the image behave differently
 
 Shadows, reflections, textures, flat regions all produce very different pixel differences.
+
+# 🔥 Why median is not regular blur
+
+Let’s test with a 3×3 window:
+
+Gaussian blur example \
+[255, 255, 255]\
+[255, 0, 255]\
+[255, 255, 255]
+
+→ average ≈ 198 → becomes a gray pixel
+
+## Gaussian blur outputs:
+
+198 (gray)
+
+It smears the edge.
+
+Median blur example
+
+Same window:
+
+[255, 255, 255]\
+[255, 0, 255]\
+[255, 255, 255]\
+
+Sorted neighborhood values:
+
+0, 255, 255, 255, ... , 255
+
+## Median = 255 → stays white.
